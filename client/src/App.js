@@ -19,7 +19,7 @@ const App = () => (
           <ProtectedRoute exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/friends" component={Friends} />
+          <ProtectedRoute exact path="/friends" component={Friends} />
           <Route component={NoMatch} />
         </Switch>
       </Container>

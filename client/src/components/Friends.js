@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Card, Header, Image } from "semantic-ui-react"
+import { Card, Divider, Image, } from "semantic-ui-react"
 
 class Friends extends React.Component {
   state = { friends: [], }
@@ -8,33 +8,41 @@ class Friends extends React.Component {
 
   componentDidMount() {
     axios.get("/api/friends")
-      .then(res => {
+      .then(res =>
         this.setState({ friends: res.data })
-      })
+      );
   }
-  renderFriends = () => {
-    const { friends } = this.state;
-    if (friends.length <= 0)
-      return <Header as="h2" textAlign="center" color="red">No Friends</Header>
-    return friends.map(friends => (
-      <Card key={friends.id}>
-        <Image src={friends.avatar} />
-        <Card.Content>
-          <Card.Header>{friends.name}</Card.Header>
-        </Card.Content>
-      </Card>
-    ))
-  }
+  // renderFriends = () => {
+  //   const { friends } = this.state;
+  //   if (friends.length <= 0) {
+  //     return <Header as="h2" textAlign="center" color="red">No Friends</Header>
+  //   } else {
+  //     return friends.map(friends => (
+  //       <Card key={friends.id}>
+  //         <Image src={friends.avatar} />
+  //         <Card.Content>
+  //           <Card.Header>{friends.name}</Card.Header>
+  //         </Card.Content>
+  //       </Card>
+  //     ))
+  //   }
+  // }
 
   render() {
+    const { friends, } = this.state;
     return (
-      <div>
-        <Header as="h1" textAlign="center">Friends</Header>
-        <br />
-        <Card.Group>
-          {this.renderFriends()}
-        </Card.Group>
-      </div>
+      <Card.Group itemsPerRow={4}>
+        { friends.map( friend => 
+          <Card key={friend.id}>
+            <Image src={friend.avatar} />
+            <Card.Content>
+              <Divider />
+              <Card.Header> { friend.name }</Card.Header>
+            </Card.Content>
+
+          </Card>
+          )}
+      </Card.Group>
     );
   };
 };
